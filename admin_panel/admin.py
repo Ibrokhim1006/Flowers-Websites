@@ -8,3 +8,6 @@ admin.site.register(FlowersCommentVideos)
 
 admin.site.register(TypeDelivery)
 admin.site.register(FlowersDelivery)
+admin.site.register(FlowersImages)
+
+admin.site.register(Blogs)

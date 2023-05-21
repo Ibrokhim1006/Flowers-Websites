@@ -16,7 +16,6 @@ class Flowers(models.Model):
     cotent = models.TextField()
     rank = models.TextField() # tarkibi
     price = models.CharField(max_length=250)
-    img = models.ImageField(upload_to='flowers/',null=True,blank=True)
     like = models.SmallIntegerField(null=True,blank=True)
     iye = models.SmallIntegerField(null=True,blank=True)
     id_category = models.ForeignKey(Categoriya,on_delete=models.CASCADE,null=True,blank=True)
@@ -24,6 +23,13 @@ class Flowers(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
+
+class FlowersImages(models.Model):
+    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE)
+    img = models.FileField(upload_to='flowers/',null=True,blank=True)
+    def __str__(self):
+        return "%s" % (self.id_flowers.name)
+
 
 class FlowersCommentVideos(models.Model):
     id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE)
@@ -55,3 +61,12 @@ class FlowersDelivery(models.Model):
     def __str__(self):
         return self.full_name
 
+class Blogs(models.Model):
+    title = models.CharField(max_length=250)
+    content = models.TextField()
+    img = models.ImageField(upload_to='blog/',null=True,blank=True)
+    eye = models.SmallIntegerField()
+    like = models.SmallIntegerField()
+    create_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title

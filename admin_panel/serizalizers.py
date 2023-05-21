@@ -38,33 +38,64 @@ class SubCategoriyaAllSerializers(serializers.ModelSerializer):
         fields = ['id','title','id_categoriya',]
 
 #========================Flowers Serializers=========================
+class FlowersImagesSer(serializers.ModelSerializer):
+    class Meta:
+        model = FlowersImages
+        fields = "__all__"
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
     id_category = CategoriyaAllSerializers(read_only=True)
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
+    img = FlowersImagesSer(read_only=True,many=True)
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','img','like','iye','id_category','id_sub_category','create_date',]
+        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','create_date','img',]
 class FlowersBaseCruderializers(serializers.ModelSerializer):
-    id_category = CategoriyaAllSerializers(read_only=True)
-    id_sub_category = SubCategoriyaAllSerializers(read_only=True)
+    # id_category = CategoriyaAllSerializers(read_only=True)
+    # id_sub_category = SubCategoriyaAllSerializers(read_only=True)
+    img = serializers.ListField(
+        child=serializers.ImageField(allow_empty_file=False, use_url=False),
+        write_only=True
+    )
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','img','like','iye','id_category','id_sub_category']
+        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img',]
     def create(self, validated_data):
-        return Flowers.objects.create(**validated_data)
+        img = validated_data.pop('img')
+        print(img)
+        flowers = Flowers.objects.create(**validated_data)
+        for item in img:
+            images = FlowersImages.objects.create(id_flowers=flowers,img=item)
+            images.save()
+        return flowers
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name',instance.name)
         instance.cotent = validated_data.get('cotent',instance.cotent)
         instance.rank = validated_data.get('rank',instance.rank)
         instance.price = validated_data.get('price',instance.price)
-        instance.img = validated_data.get('img',instance.img)
         instance.like = validated_data.get('like',instance.like)
         instance.iye = validated_data.get('iye',instance.iye)
         instance.id_sub_category = validated_data.get('id_sub_category',instance.id_sub_category)
         instance.id_category = validated_data.get('id_category',instance.id_category)
         instance.save() 
         return instance
-
+class FlowersImagesAllSerizaliers(serializers.ModelSerializer):
+    id_flowers = FlowersBaseAllSerializers(read_only=True)
+    class Meta:
+        model = FlowersImages
+        fields = ['id','id_flowers','img']
+# class FlowersImagesCrudSerializers(serializers.ModelSerializer):
+#     img = serializers.ListField(
+#         child=serializers.ImageField(allow_empty_file=False, use_url=False),
+#         write_only=True
+#     )
+#     class Meta:
+#         model = FlowersImages
+#         fields = ['id','id_flowers','img']
+#     def create(self, validated_data):
+#         img = validated_data.pop('img')
+#         for item in img:
+#             print(item)
+#         return img
 #=======================Flowers Commit And Videos Serizalizers================
 class FlowersCommitVideoBaseSerializers(serializers.ModelSerializer):
     id_flowers = FlowersBaseAllSerializers(read_only=True)
@@ -128,3 +159,10 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
     #     instance.videos = validated_data.get('videos',instance.videos)
     #     instance.save() 
     #     return instance
+
+
+#=======================Blogs Serizalizers================
+class BlogAllBaseSerialiezers(serializers.ModelSerializer):
+    class Meta:
+        model = Blogs
+        fields = "__all__"

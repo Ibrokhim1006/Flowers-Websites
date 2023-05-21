@@ -10,11 +10,14 @@ urlpatterns = [
     #======================Flowers Urls====================================
     path('flowers_base_all_views/',FlowersBaseAllViews.as_view()),
     path('flowers_base_crud_views/<int:pk>/',FlowersBaseCrudViews.as_view()),
+    # path('flowers_images_post_views/',FlowersImagesPostViews.as_view()),
     #======================Flowers Commit And Vidoe Urls==================
     path('flowers_video_commit_base_all_views/',FlowersVideoCommitBaseAllViews.as_view()),
     path('flowers_video_commit_crud_views/<int:pk>/',FlowersVideoCommitCrudViews.as_view()),
     #======================Flowers Delivery Urls============================
     path('flowers_delivery_base_all_views/',FlowersDeliveryBaseAllViews.as_view()),
     path('flowers_delivery_crud_views/<int:pk>/',FlowersDeliveryCrudViews.as_view()),
-
+    #======================Blogs Urls============================
+    path('blogs_base_all_views/',BlogsBaseAllViews.as_view()),
+    path('BlogsAllViews/',BlogsAllViews.as_view()),
 ]   
