@@ -6,11 +6,13 @@ urlpatterns = [
     path('user_profiles_views/',UserProfilesViews.as_view()),
     #======================Categoriya And Sub Categoriya Urls==============
     path('categoriya_base_all_views/',CategoriyaBaseAllViews.as_view()),
+    path('categoriya_base_crud_views/<int:pk>/',CategoriyaBaseCrudViews.as_view()),
     path('sub_categoriya_base_all_views/',SubCategoriyaBaseAllViews.as_view()),
+    path('sub_categoriya_base_crud_views/<int:pk>/',SubCategoriyaBaseCrudViews.as_view()),
     #======================Flowers Urls====================================
     path('flowers_base_all_views/',FlowersBaseAllViews.as_view()),
     path('flowers_base_crud_views/<int:pk>/',FlowersBaseCrudViews.as_view()),
-    # path('flowers_images_post_views/',FlowersImagesPostViews.as_view()),
+    path('flowers_images_post_views/<int:pk>/',FlowersImagesPostViews.as_view()),
     #======================Flowers Commit And Vidoe Urls==================
     path('flowers_video_commit_base_all_views/',FlowersVideoCommitBaseAllViews.as_view()),
     path('flowers_video_commit_crud_views/<int:pk>/',FlowersVideoCommitCrudViews.as_view()),
@@ -19,5 +21,5 @@ urlpatterns = [
     path('flowers_delivery_crud_views/<int:pk>/',FlowersDeliveryCrudViews.as_view()),
     #======================Blogs Urls============================
     path('blogs_base_all_views/',BlogsBaseAllViews.as_view()),
-    path('BlogsAllViews/',BlogsAllViews.as_view()),
+    path('blogs_base_crud_views/<int:pk>/',BlogsBaseCrudViews.as_view()),
 ]   
