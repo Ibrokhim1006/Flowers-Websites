@@ -74,6 +74,7 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
     def create(self, validated_data):
         img = validated_data.pop('img')
         flowers = Flowers.objects.create(**validated_data)
+        print(img)
         for item in img:
             images = FlowersImages.objects.create(id_flowers=flowers,img=item)
             images.save()

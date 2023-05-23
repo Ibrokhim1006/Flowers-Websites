@@ -138,12 +138,12 @@ class FlowersBaseAllViews(APIView):
         else:
             serializer = self.serializer_class(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    # def post(self,request,format=None):
-    #     serializers = FlowersBaseCruderializers(data=request.data)
-    #     if serializers.is_valid(raise_exception=True):
-    #         serializers.save(comment = request.data.get('comment'))
-    #         return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
-    #     return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+    def post(self,request,format=None):
+        serializers = FlowersBaseCruderializers(data=request.data)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class FlowersBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
@@ -209,10 +209,12 @@ class FlowersVideoCommitBaseAllViews(APIView):
         page = self.paginate_queryset(objects_list)
         if page is not None:
             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+            # return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             serializer = self.serializer_class(objects_list, many=True)
-
+        
         return Response(serializer.data,status=status.HTTP_200_OK)
+        # return Response({'c'})
     def post(self,request,format=None):
         serializers = FlowersCommitVideoCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
