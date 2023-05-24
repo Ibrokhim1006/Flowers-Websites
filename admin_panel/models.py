@@ -70,3 +70,14 @@ class Blogs(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
+
+class SeoCategory(models.Model):
+    title = models.CharField(max_length=250)
+    def __str__(self):
+        return self.title
+class SeoContent(models.Model):
+    title = models.CharField(max_length=250)
+    content = models.TextField()
+    id_seo = models.ForeignKey(SeoCategory,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.title

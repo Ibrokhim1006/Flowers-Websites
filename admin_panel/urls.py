@@ -22,4 +22,9 @@ urlpatterns = [
     #======================Blogs Urls============================
     path('blogs_base_all_views/',BlogsBaseAllViews.as_view()),
     path('blogs_base_crud_views/<int:pk>/',BlogsBaseCrudViews.as_view()),
+    #======================SEO Urls=========================================
+    path('seo_category_all_views/',SeoCategoryAllViews.as_view()),
+    path('seo_content_base_all_views/',SeoContentBaseAllViews.as_view()),
+    path('seo_content_crud_views/<int:pk>/',SeoContentCrudViews.as_view()),
+
 ]   

@@ -190,3 +190,30 @@ class BlogCrudBaseSerialiezers(serializers.ModelSerializer):
         instance.create_date = validated_data.get('create_date',instance.create_date)
         instance.save() 
         return instance
+
+#=============================SEO Serializers==================================================
+class SeoCategoryAllSerialiezers(serializers.ModelSerializer):
+    class Meta:
+        model = SeoCategory
+        fields = "__all__"
+
+class SeoContentAllSerialiezers(serializers.ModelSerializer):
+    id_seo = SeoCategoryAllSerialiezers(read_only=True)
+    class Meta:
+        model = SeoContent
+        fields = "__all__"
+
+class SeoContentCrudSerialiezers(serializers.ModelSerializer):
+    class Meta:
+        model = SeoContent
+        fields = ['id','title','content','id_seo']
+    def create(self, validated_data):
+        return SeoContent.objects.create(**validated_data)
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title',instance.title)
+        instance.content = validated_data.get('content',instance.content)
+        instance.id_seo = validated_data.get('id_seo',instance.id_seo)
+        instance.save() 
+        return instance
+
+

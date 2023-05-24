@@ -11,3 +11,5 @@ admin.site.register(FlowersDelivery)
 admin.site.register(FlowersImages)
 
 admin.site.register(Blogs)
+admin.site.register(SeoCategory)
+admin.site.register(SeoContent)
