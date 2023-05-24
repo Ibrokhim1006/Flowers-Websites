@@ -53,8 +53,7 @@ class FlowersImagesSer(serializers.ModelSerializer):
         model = FlowersImages
         fields = '__all__'
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
-    id_category = CategoriyaAllSerializers(read_only=True)
-    
+    id_category = CategoriyaAllSerializers(read_only=True)    
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
     img = FlowersImagesSer(many=True,read_only=True)
     class Meta:

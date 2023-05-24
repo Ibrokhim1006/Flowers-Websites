@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from admin_panel.renderers import UserRenderers
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.core.paginator import Paginator
 from admin_panel.pagination import *
 from admin_panel.serizalizers import *
 from admin_panel.models import *
@@ -53,7 +54,7 @@ class CategoriyaBaseAllViews(APIView):
         serializers = CategoriyaCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class CategoriyaBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
@@ -67,7 +68,7 @@ class CategoriyaBaseCrudViews(APIView):
         serializers = CategoriyaCrudSerializers(instance=Categoriya.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = Categoriya.objects.get(id=pk)
@@ -78,6 +79,7 @@ class CategoriyaBaseCrudViews(APIView):
 class SubCategoriyaBaseAllViews(APIView):
     render_classes = [UserRenderers]
     perrmisson_class = [IsAuthenticated]
+    pagi_class = LargeResultsSetPagination
     def get(self,request,format=None):
         objects_list = SubCategoriya.objects.all()
         serializer = SubCategoriyaAllSerializers(objects_list,many=True)
@@ -86,7 +88,7 @@ class SubCategoriyaBaseAllViews(APIView):
         serializers = SubCategoriyaCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class SubCategoriyaBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
@@ -100,7 +102,7 @@ class SubCategoriyaBaseCrudViews(APIView):
         serializers = SubCategoriyaCrudSerializers(instance=SubCategoriya.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = SubCategoriya.objects.get(id=pk)
@@ -132,17 +134,18 @@ class FlowersBaseAllViews(APIView):
         return self.paginator.get_paginated_response(data)
     def get(self, request, format=None, *args, **kwargs):
         instance = Flowers.objects.all()
-        page = self.paginate_queryset(instance)
-        if page is not None:
-            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
-        else:
-            serializer = self.serializer_class(instance, many=True)
+        serializer = FlowersBaseAllSerializers(instance,many=True)
+        # page = self.paginate_queryset(instance)
+        # if page is not None:
+        #     serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        # else:
+        #     serializer = self.serializer_class(instance, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     def post(self,request,format=None):
         serializers = FlowersBaseCruderializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class FlowersBaseCrudViews(APIView):
@@ -157,7 +160,7 @@ class FlowersBaseCrudViews(APIView):
         serializers = FlowersBaseCruderializers(instance=Flowers.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = Flowers.objects.get(id=pk)
@@ -175,7 +178,7 @@ class FlowersImagesPostViews(APIView):
         serializers = FlowersImagesCrudSerializers(instance=FlowersImages.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = FlowersImages.objects.get(id=pk)
@@ -219,7 +222,7 @@ class FlowersVideoCommitBaseAllViews(APIView):
         serializers = FlowersCommitVideoCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save(comment = request.data.get('comment'))
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class FlowersVideoCommitCrudViews(APIView):
     render_classes = [UserRenderers]
@@ -232,7 +235,7 @@ class FlowersVideoCommitCrudViews(APIView):
         serializers = FlowersCommitVideoCrudSerializers(instance=FlowersCommentVideos.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = FlowersCommentVideos.objects.get(id=pk)
@@ -274,7 +277,7 @@ class FlowersDeliveryBaseAllViews(APIView):
         serializers = FlowersDeliveryCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class FlowersDeliveryCrudViews(APIView):
     render_classes = [UserRenderers]
@@ -323,7 +326,7 @@ class BlogsBaseAllViews(APIView):
         serializers = BlogCrudBaseSerialiezers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':'Create Sucsess'},status=status.HTTP_201_CREATED)
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class BlogsBaseCrudViews(APIView):
     render_classes = [UserRenderers]
@@ -336,7 +339,7 @@ class BlogsBaseCrudViews(APIView):
         serializers = BlogCrudBaseSerialiezers(instance=Blogs.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
-            return Response({'message':"success update"},status=status.HTTP_200_OK)
+            return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
         objects_get = Blogs.objects.get(id=pk)
