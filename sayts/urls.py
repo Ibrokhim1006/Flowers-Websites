@@ -9,4 +9,14 @@ urlpatterns = [
     path('Flouvers/',Flouvers),
     path('flowers_deteile_views/<int:pk>/',FlowersDeteileViews.as_view()),
 
+    path('commit_vidoes_sites_views/',CommitVidoesSitesViews.as_view()),
+
+    path('flowers_delivery_sites_views/',FlowersDeliverySitesViews.as_view()),
+
+    path('blogs_all_sites_views/',BlogsAllSitesViews.as_view()),
+    path('blogs_deteiles_sites_views/<int:pk>/',BlogsDeteilesSitesViews.as_view()),
+    path('AllProductSearchView/',AllProductSearchView.as_view()),
+
+    path('seo_all_sites_views/',SeoAllSitesViews.as_view()),
+
 ]

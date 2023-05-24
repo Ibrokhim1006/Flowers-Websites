@@ -44,3 +44,9 @@ class FlowersImagesSerizaliers(serializers.ModelSerializer):
             print(attempt)
             attempt_number = attempt.id
         return attempt_number
+
+class CommitVidoesSerizalizers(serializers.ModelSerializer):
+    id_flowers = FlowersAllSerializers()
+    class Meta:
+        model = FlowersCommentVideos
+        fields = '__all__'
