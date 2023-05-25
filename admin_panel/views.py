@@ -91,7 +91,6 @@ class SubCategoriyaBaseAllViews(APIView):
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class SubCategoriyaBaseCrudViews(APIView):
-    parser_class = [MultiPartParser, FormParser]
     render_classes = [UserRenderers]
     perrmisson_class = [IsAuthenticated]
     def get(self,request,pk,format=None):
