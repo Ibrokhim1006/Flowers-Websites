@@ -63,19 +63,19 @@ class FlowersBaseAllSerializers(serializers.ModelSerializer):
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
     # id_sub_category = SubCategoriyaAllSerializers(read_only=True)
-    img= FlowersImagesSer(many=True, read_only = True)
-    upload_images = serializers.ListField(
+    # img= FlowersImagesSer(many=True, read_only = True)
+    img = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False, use_url=False),
         write_only=True
     )
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img','upload_images']
+        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img']
     def create(self, validated_data):
-        upload_images = validated_data.pop('upload_images')
+        img = validated_data.pop('img')
         flowers = Flowers.objects.create(**validated_data)
-        print(upload_images)
-        for item in upload_images:
+        print(img)
+        for item in img:
             images = FlowersImages.objects.create(id_flowers=flowers,img=item)
             images.save()
         return flowers
