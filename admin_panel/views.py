@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from admin_panel.renderers import UserRenderers
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.generics import CreateAPIView
 from admin_panel.pagination import *
 from admin_panel.serizalizers import *
 from admin_panel.models import *
@@ -108,44 +109,48 @@ class SubCategoriyaBaseCrudViews(APIView):
         objects_get.delete()
         return Response({'message':"Delete success"},status=status.HTTP_200_OK)
 #===============================Flowers Views==========================================
-class FlowersBaseAllViews(APIView):
-    pagination_class = LargeResultsSetPagination
-    serializer_class = FlowersBaseAllSerializers
-    render_classes = [UserRenderers]
+# class FlowersBaseAllViews(APIView):
+#     pagination_class = LargeResultsSetPagination
+#     serializer_class = FlowersBaseAllSerializers
+#     render_classes = [UserRenderers]
+#     parser_class = [MultiPartParser, FormParser]
+#     perrmisson_class = [IsAuthenticated]
+#     @property
+#     def paginator(self):
+#         if not hasattr(self, '_paginator'):
+#             if self.pagination_class is None:
+#                 self._paginator = None
+#             else:
+#                 self._paginator = self.pagination_class()
+#         else:
+#             pass
+#         return self._paginator
+#     def paginate_queryset(self, queryset):
+#         if self.paginator is None:
+#             return None
+#         return self.paginator.paginate_queryset(queryset,self.request, view=self)
+#     def get_paginated_response(self, data):
+#         assert self.paginator is not None
+#         return self.paginator.get_paginated_response(data)
+#     def get(self, request, format=None, *args, **kwargs):
+#         instance = Flowers.objects.all()
+#         # serializer = FlowersBaseAllSerializers(instance,many=True)
+#         page = self.paginate_queryset(instance)
+#         if page is not None:
+#             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+#         else:
+#             serializer = self.serializer_class(instance, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+#     def post(self,request,format=None):
+#         serializers = FlowersBaseCruderializers(data=request.data)
+#         if serializers.is_valid(raise_exception=True):
+#             serializers.save(img = request.data.get('img'))
+#             return Response(serializers.data,status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class FlowersBaseAllViews(CreateAPIView):
     parser_class = [MultiPartParser, FormParser]
-    perrmisson_class = [IsAuthenticated]
-    @property
-    def paginator(self):
-        if not hasattr(self, '_paginator'):
-            if self.pagination_class is None:
-                self._paginator = None
-            else:
-                self._paginator = self.pagination_class()
-        else:
-            pass
-        return self._paginator
-    def paginate_queryset(self, queryset):
-        if self.paginator is None:
-            return None
-        return self.paginator.paginate_queryset(queryset,self.request, view=self)
-    def get_paginated_response(self, data):
-        assert self.paginator is not None
-        return self.paginator.get_paginated_response(data)
-    def get(self, request, format=None, *args, **kwargs):
-        instance = Flowers.objects.all()
-        # serializer = FlowersBaseAllSerializers(instance,many=True)
-        page = self.paginate_queryset(instance)
-        if page is not None:
-            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
-        else:
-            serializer = self.serializer_class(instance, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    def post(self,request,format=None):
-        serializers = FlowersBaseCruderializers(data=request.data)
-        if serializers.is_valid(raise_exception=True):
-            serializers.save(img = request.data.get('img'))
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
-        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+    serializer_class = FlowersBaseCruderializers
 
 class FlowersBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
