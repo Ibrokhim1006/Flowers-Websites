@@ -44,7 +44,7 @@ class FlowersAllSitesViews(APIView):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
     def get(self,request,format=None):
-        objects_list = Flowers.objects.all()
+        objects_list = Flowers.objects.all().order_by('-pk')
         page = self.paginate_queryset(objects_list)
         if page is not None:
             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
@@ -84,7 +84,7 @@ class CommitVidoesSitesViews(APIView):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
     def get(self,request,format=None):
-        objects_list = FlowersCommentVideos.objects.all()
+        objects_list = FlowersCommentVideos.objects.all().order_by('-pk')
         page = self.paginate_queryset(objects_list)
         if page is not None:
             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
@@ -121,7 +121,7 @@ class BlogsAllSitesViews(APIView):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
     def get(self,request,format=None):
-        objects_list = Blogs.objects.all()
+        objects_list = Blogs.objects.all().order_by('-pk')
         page = self.paginate_queryset(objects_list)
         if page is not None:
             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
