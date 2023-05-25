@@ -264,7 +264,7 @@ class FlowersDeliveryBaseAllViews(APIView):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
     def get(self,request,format=None):
-        objects_list = FlowersDelivery.objects.all()
+        objects_list = FlowersDelivery.objects.all().order_by('-id')
         page = self.paginate_queryset(objects_list)
         if page is not None:
             serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
