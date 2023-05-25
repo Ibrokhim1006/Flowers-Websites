@@ -36,7 +36,9 @@ class SubCategoriyaAllSerializers(serializers.ModelSerializer):
     class Meta:
         model = SubCategoriya
         fields = ['id','title','id_categoriya',]
+        
 class SubCategoriyaCrudSerializers(serializers.ModelSerializer):
+    id_categoriya = CategoriyaAllSerializers(read_only=True)
     class Meta:
         model = SubCategoriya
         fields = ['id','title','id_categoriya',]
@@ -61,8 +63,8 @@ class FlowersBaseAllSerializers(serializers.ModelSerializer):
         fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','create_date','img',]
 
 class FlowersBaseCruderializers(serializers.ModelSerializer):
-    # id_category = CategoriyaAllSerializers(read_only=True)
-    # id_sub_category = SubCategoriyaAllSerializers(read_only=True)
+    id_category = CategoriyaAllSerializers(read_only=True)
+    id_sub_category = SubCategoriyaAllSerializers(read_only=True)
     # img= FlowersImagesSer(many=True, read_only = True)
     img = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False, use_url=False),
@@ -96,6 +98,8 @@ class FlowersImagesAllSerizaliers(serializers.ModelSerializer):
         model = FlowersImages
         fields = ['id','id_flowers','img']
 class FlowersImagesCrudSerializers(serializers.ModelSerializer):
+    id_flowers = FlowersBaseAllSerializers(read_only=True)
+
     class Meta:
         model = FlowersImages
         fields = ['id','id_flowers','img']
@@ -114,7 +118,7 @@ class FlowersCommitVideoBaseSerializers(serializers.ModelSerializer):
         model = FlowersCommentVideos
         fields = ['id','id_flowers','comment','videos','create_date']
 class FlowersCommitVideoCrudSerializers(serializers.ModelSerializer):
-    # id_flowers = FlowersBaseAllSerializers(read_only=True)
+    id_flowers = FlowersBaseAllSerializers(read_only=True)
     class Meta:
         model = FlowersCommentVideos
         fields = ['id','id_flowers','comment','videos','create_date']
@@ -141,6 +145,8 @@ class FlowersDeliveryBaseSerializers(serializers.ModelSerializer):
         fields = ['id','id_flowers','prcie','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
 
 class FlowersDeliveryCrudSerializers(serializers.ModelSerializer): 
+    id_flowers = FlowersBaseAllSerializers(read_only=True)
+    id_type_delivery = TypeDeliverySerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
         fields = ['id','id_flowers','prcie','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
@@ -205,6 +211,8 @@ class SeoContentAllSerialiezers(serializers.ModelSerializer):
         fields = "__all__"
 
 class SeoContentCrudSerialiezers(serializers.ModelSerializer):
+    id_seo = SeoCategoryAllSerialiezers(read_only=True)
+
     class Meta:
         model = SeoContent
         fields = ['id','title','content','id_seo']
