@@ -143,7 +143,7 @@ class FlowersBaseAllViews(APIView):
     def post(self,request,format=None):
         serializers = FlowersBaseCruderializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
-            serializers.save()
+            serializers.save(img = request.data.get('img'))
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -324,7 +324,7 @@ class BlogsBaseAllViews(APIView):
     def post(self,request,format=None):
         serializers = BlogCrudBaseSerialiezers(data=request.data)
         if serializers.is_valid(raise_exception=True):
-            serializers.save()
+            serializers.save(img = request.data.get('img'))
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class BlogsBaseCrudViews(APIView):
