@@ -194,6 +194,7 @@ class BlogCrudBaseSerialiezers(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
         instance.content = validated_data.get('content',instance.content)
+        instance.img = validated_data.get('img',instance.img)
         instance.eye = validated_data.get('eye',instance.eye)
         instance.like = validated_data.get('like',instance.like)
         instance.create_date = validated_data.get('create_date',instance.create_date)
