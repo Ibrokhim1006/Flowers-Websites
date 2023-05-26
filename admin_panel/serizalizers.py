@@ -75,7 +75,7 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
         write_only=True)
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img','flowers']
+        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img']
     def create(self, validated_data):
         img = validated_data.pop('img')
         flowers = Flowers.objects.create(**validated_data)
