@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate
 from admin_panel.renderers import UserRenderers
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.generics import CreateAPIView
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from admin_panel.pagination import *
 from admin_panel.serizalizers import *
 from admin_panel.models import *
@@ -112,7 +113,7 @@ class FlowersBaseAllViews(APIView):
     pagination_class = LargeResultsSetPagination
     serializer_class = FlowersBaseAllSerializers
     render_classes = [UserRenderers]
-    parser_class = [MultiPartParser, FormParser]
+    parser_class = (MultiPartParser, FormParser)
     perrmisson_class = [IsAuthenticated]
     @property
     def paginator(self):
@@ -147,9 +148,11 @@ class FlowersBaseAllViews(APIView):
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
-# class FlowersBaseAllViews(CreateAPIView):
-#     parser_class = [MultiPartParser, FormParser]
+# class FlowersBaseAllViews(ModelViewSet):
+#     queryset = Flowers.objects.all()
 #     serializer_class = FlowersBaseCruderializers
+#     parser_classes = (MultiPartParser, FormParser)
+    
 
 class FlowersBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]

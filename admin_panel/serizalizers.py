@@ -69,11 +69,10 @@ class FlowersBaseAllSerializers(serializers.ModelSerializer):
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
     # id_sub_category = SubCategoriyaAllSerializers(read_only=True)
-    # img= FlowersImagesSer(many=True, read_only = True)
+    # img2= FlowersImagesSer(many=True, read_only = True)
     img = serializers.ListField(
-        child=serializers.ImageField(allow_empty_file=False, use_url=False),
-        write_only=True
-    )
+        child = serializers.ImageField(max_length = 1000000, allow_empty_file = False, use_url = False),
+        write_only=True)
     class Meta:
         model = Flowers
         fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img']
