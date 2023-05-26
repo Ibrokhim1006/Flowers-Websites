@@ -25,7 +25,7 @@ class Flowers(models.Model):
         return self.name
 
 class FlowersImages(models.Model):
-    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE)
+    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE,related_name='flowers')
     img = models.FileField(upload_to='flowers/',null=True,blank=True)
     def __str__(self):
         return "%s" % (self.id_flowers.name)

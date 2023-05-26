@@ -10,6 +10,7 @@ from admin_panel.renderers import UserRenderers
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.generics import CreateAPIView
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from django.http import JsonResponse
 from admin_panel.pagination import *
 from admin_panel.serizalizers import *
 from admin_panel.models import *
@@ -132,8 +133,9 @@ class FlowersBaseAllViews(APIView):
     def get_paginated_response(self, data):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
-    def get(self, request, format=None, *args, **kwargs):
-        instance = Flowers.objects.all().order_by('-pk')
+    def get(self, request, format=None):
+        instance = Flowers.objects.all()
+
         # serializer = FlowersBaseAllSerializers(instance,many=True)
         page = self.paginate_queryset(instance)
         if page is not None:
@@ -148,19 +150,13 @@ class FlowersBaseAllViews(APIView):
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 
-# class FlowersBaseAllViews(ModelViewSet):
-#     queryset = Flowers.objects.all()
-#     serializer_class = FlowersBaseCruderializers
-#     parser_classes = (MultiPartParser, FormParser)
-    
-
 class FlowersBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
     render_classes = [UserRenderers]
     perrmisson_class = [IsAuthenticated] 
     def get(self,request,pk,format=None):
-        objects_list = FlowersImages.objects.filter(id_flowers__id=pk).order_by('-pk')
-        seriz = FlowersImagesAllSerizaliers(objects_list,many=True)
+        objects_list = Flowers.objects.filter(pk=pk)
+        seriz = FlowersBaseAllSerializers(objects_list,many=True)
         return Response({'flowers':seriz.data},status=status.HTTP_200_OK)
     def put(self,request,pk,format=None):
         serializers = FlowersBaseCruderializers(instance=Flowers.objects.filter(id=pk)[0],data=request.data,partial =True)

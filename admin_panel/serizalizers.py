@@ -61,10 +61,10 @@ class FlowersImagesSer(serializers.ModelSerializer):
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
     id_category = CategoriyaAllSerializers(read_only=True)    
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
-    img = FlowersImagesSer(many=True,read_only=True)
+    flowers = FlowersImagesSer(many=True,read_only=True)
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','create_date','img',]
+        fields = ('id','name','cotent','rank','price','like','iye','id_category','id_sub_category','create_date','flowers')
 
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
