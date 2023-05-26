@@ -134,7 +134,7 @@ class FlowersBaseAllViews(APIView):
         assert self.paginator is not None
         return self.paginator.get_paginated_response(data)
     def get(self, request, format=None):
-        instance = Flowers.objects.all()
+        instance = Flowers.objects.all().order_by('-pk')
 
         # serializer = FlowersBaseAllSerializers(instance,many=True)
         page = self.paginate_queryset(instance)
