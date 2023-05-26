@@ -338,9 +338,10 @@ class BlogsBaseCrudViews(APIView):
         serializer = BlogAllBaseSerialiezers(objects_list,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
     def put(self,request,pk,format=None):
-        serializers = BlogCrudBaseSerialiezers(instance=Blogs.objects.filter(id=pk)[0],data=request.data,partial =True)
+        blog = Blogs.objects.filter(id=pk)[0]
+        serializers = BlogCrudBaseSerialiezers(instance=blog,data=request.data,context = {'img':blog.img}, partial =True)
         if serializers.is_valid(raise_exception=True):
-            serializers.save(img = request.data.get('img'))
+            serializers.save()
             return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
