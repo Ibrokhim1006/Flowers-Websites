@@ -25,10 +25,17 @@ class ImgFlowers(serializers.ModelSerializer):
     class Meta:
         model = FlowersImages
         fields = '__all__'
+
+class CommitVideoSer(serializers.ModelSerializer):
+    class Meta:
+        model = FlowersCommentVideos
+        fields = '__all__'
 class FlowersAllSerializers(serializers.ModelSerializer):
     id_category = CategoryFlowers(read_only=True)
     id_sub_category = SubCategoryFlowers(read_only=True)
     flowers = ImgFlowers(many=True,read_only=True)
+    commit = CommitVideoSer(many=True,read_only=True)
+
     class Meta:
         model = Flowers
         fields = '__all__'

@@ -32,7 +32,7 @@ class FlowersImages(models.Model):
 
 
 class FlowersCommentVideos(models.Model):
-    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE)
+    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE,related_name='commit')
     comment = models.ImageField(upload_to='commit/',null=True,blank=True)
     videos = models.FileField(upload_to='video/',null=True,blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
