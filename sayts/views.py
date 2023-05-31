@@ -54,7 +54,7 @@ class FlowersAllSitesViews(APIView):
 class FlowersDeteileViews(APIView):
     def get(self,request,pk,format=None):
         objects_list = Flowers.objects.filter(id=pk)
-        serializers = FlowersImagesSerizaliers(objects_list,many=True,context={'pk':pk})
+        serializers = FlowersAllSerializers(objects_list,many=True,context={'pk':pk})
 
         return Response(serializers.data,status=status.HTTP_200_OK)
 def Flouvers(request):
