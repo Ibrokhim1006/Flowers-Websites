@@ -17,11 +17,21 @@ class CategoryAllSitesViews(APIView):
         serializers = CategoryAllSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 class SubCategoryAllSitesViews(APIView):
-    def get(self,request,format=None):
-        objects_list = SubCategoriya.objects.all()
+    def get(self,request,pk,format=None):
+        objects_list = SubCategoriya.objects.filter(id_categoriya__id=pk)
         serializers = SubCategoryAllSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 
+class FlowersCategoryDeteile(APIView):
+    def get(self,request,pk,format=None):
+        objects_list = Flowers.objects.filter(id_category__id=pk)
+        serializers = FlowersAllSerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+class FlowersSubCategoryDeteile(APIView):
+    def get(self,request,pk,format=None):
+        objects_list = Flowers.objects.filter(id_sub_category__id=pk)
+        serializers = FlowersAllSerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
 #==================Flowers Views===================================
 class FlowersAllSitesViews(APIView):
     pagination_class = LargeResultsSetPagination
