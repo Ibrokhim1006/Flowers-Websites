@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('commit_vidoes_sites_views/',CommitVidoesSitesViews.as_view()),
 
+    path('flowers_delivery_category/',FlowersDeliveryCategory.as_view()),
     path('flowers_delivery_sites_views/',FlowersDeliverySitesViews.as_view()),
     path('blogs_deteiles_sites_views/<int:pk>/',BlogsDeteilesSitesViews.as_view()),
 

@@ -102,8 +102,13 @@ class CommitVidoesSitesViews(APIView):
             serializer = self.serializer_class(objects_list, many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+class FlowersDeliveryCategory(APIView):
+    def get(self,request,format=None):
+        objects_list =TypeDelivery.objects.all()
+        serializers = TypeDeliverySerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
 class FlowersDeliverySitesViews(APIView):
-    def put(self,request,format=None):
+    def post(self,request,format=None):
         serializers = FlowersDeliveryCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
@@ -156,7 +161,7 @@ class AllProductSearchView(generics.ListAPIView):
     queryset = Flowers.objects.all()
     serializer_class = FlowersAllSerializers
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ['name','price']
 
 class SeoAllSitesViews(APIView):
     def get(self,request,format=None):
