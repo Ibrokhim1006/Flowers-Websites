@@ -140,7 +140,7 @@ class TypeDeliverySerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class FlowersDeliveryBaseSerializers(serializers.ModelSerializer):
-    id_flowers = FlowersBaseAllSerializers(read_only=True)
+    id_flowers = FlowersBaseAllSerializers(read_only=True,many=True)
     id_type_delivery = TypeDeliverySerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
@@ -153,7 +153,6 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
         model = FlowersDelivery
         fields = ['id','id_flowers','prcie','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
     def create(self, validated_data):
-        id_flowers = validated_data['id_flowers']
         prcie = validated_data['prcie']
         id_type_delivery = validated_data['id_type_delivery']
         full_name = validated_data['full_name']
@@ -166,11 +165,16 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
         time_delivery = validated_data['time_delivery']
         and_time = validated_data['and_time']
         comment = validated_data['comment']
+        id_flowers = validated_data['id_flowers']
+       
         for item in TypeDelivery.objects.all():
             if id_type_delivery.id==item.id:
                 x = int(prcie)+int(item.price)
-        saves = FlowersDelivery.objects.create(id_flowers=id_flowers,full_name=full_name,prcie=x,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
+        saves = FlowersDelivery.objects.create(full_name=full_name,prcie=x,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
         saves.save()
+        for item in id_flowers:
+            saves.id_flowers.add(item.id)
+            saves.save()
         return saves
     # def update(self, instance, validated_data):
     #     instance.id_flowers = validated_data.get('id_flowers',instance.id_flowers)

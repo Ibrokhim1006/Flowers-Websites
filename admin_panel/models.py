@@ -44,7 +44,7 @@ class TypeDelivery(models.Model):
         return self.title
 
 class FlowersDelivery(models.Model):
-    id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE,null=True,blank=True)
+    id_flowers = models.ManyToManyField(Flowers,blank=True)
     prcie = models.CharField(max_length=250,null=True,blank=True)
     id_type_delivery = models.ForeignKey(TypeDelivery,on_delete=models.CASCADE,null=True,blank=True)
     full_name = models.CharField(max_length=250,null=True,blank=True)
