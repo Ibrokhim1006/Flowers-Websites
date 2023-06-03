@@ -170,7 +170,7 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
         for item in TypeDelivery.objects.all():
             if id_type_delivery.id==item.id:
                 x = int(prcie)+int(item.price)
-        saves = FlowersDelivery.objects.create(full_name=full_name,prcie=x,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
+        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,prcie=x,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
         saves.save()
         for item in id_flowers:
             saves.id_flowers.add(item.id)
