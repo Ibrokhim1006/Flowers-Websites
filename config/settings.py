@@ -192,6 +192,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:3000",
     "http://5.101.152.59:80",
-    "http://viaavm6y.beget.tech"
+    "http://viaavm6y.beget.tech",
+    "https://букетнаямануфактура78.рф",
+    "https://198.16.78.43:443"
 
 ]
