@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!y$5hp#w%=%69hfqgz$2cpmp2m$ws+9&4ezj9c5f(i4e=up@7_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*','admin-flowers.ru']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -194,6 +194,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://5.101.152.59:80",
     "http://viaavm6y.beget.tech",
     "https://букетнаямануфактура78.рф",
-    "https://198.16.78.43:443"
+    "https://198.16.78.43:443",
+    "https://букетнаямануфактура.рф",
+    "https://198.16.66.196:443"
 
 ]
