@@ -9,6 +9,7 @@ urlpatterns = [
     path('categoriya_base_crud_views/<int:pk>/',CategoriyaBaseCrudViews.as_view()),
     path('sub_categoriya_base_all_views/',SubCategoriyaBaseAllViews.as_view()),
     path('sub_categoriya_base_crud_views/<int:pk>/',SubCategoriyaBaseCrudViews.as_view()),
+    path('categoriya_deteile/<int:pk>/',CategoriyaDeteile.as_view()),
     #======================Flowers Urls====================================
     path('flowers_base_all_views/',FlowersBaseAllViews.as_view()),
     path('flowers_all_views/',FlowersAllViews.as_view()),

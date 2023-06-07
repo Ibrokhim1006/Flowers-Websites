@@ -109,6 +109,14 @@ class SubCategoriyaBaseCrudViews(APIView):
         objects_get = SubCategoriya.objects.get(id=pk)
         objects_get.delete()
         return Response({'message':"Delete success"},status=status.HTTP_200_OK)
+
+class CategoriyaDeteile(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    def get(self,request,pk,format=None):
+        objects_list = SubCategoriya.objects.filter(id_categoriya__id=pk)
+        serializers = SubCategoriyaCrudSerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
 #===============================Flowers Views==========================================
 class FlowersBaseAllViews(APIView):
     pagination_class = LargeResultsSetPagination
