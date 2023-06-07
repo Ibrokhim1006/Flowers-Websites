@@ -11,6 +11,7 @@ urlpatterns = [
     path('sub_categoriya_base_crud_views/<int:pk>/',SubCategoriyaBaseCrudViews.as_view()),
     #======================Flowers Urls====================================
     path('flowers_base_all_views/',FlowersBaseAllViews.as_view()),
+    path('flowers_all_views/',FlowersAllViews.as_view()),
     path('flowers_base_crud_views/<int:pk>/',FlowersBaseCrudViews.as_view()),
     path('flowers_images_post_views/<int:pk>/',FlowersImagesPostViews.as_view()),
     #======================Flowers Commit And Vidoe Urls==================

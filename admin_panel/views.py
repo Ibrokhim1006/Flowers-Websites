@@ -149,6 +149,13 @@ class FlowersBaseAllViews(APIView):
             serializers.save()
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+class FlowersAllViews(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    def get(self, request, format=None):
+        instance = Flowers.objects.all().order_by('-pk')
+        serializer = FlowersBaseAllSerializers(instance,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class FlowersBaseCrudViews(APIView):
     parser_class = [MultiPartParser, FormParser]
