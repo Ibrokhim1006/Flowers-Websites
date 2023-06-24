@@ -86,7 +86,6 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name',instance.name)
         instance.cotent = validated_data.get('cotent',instance.cotent)
-        instance.rank = validated_data.get('rank',instance.rank)
         instance.price = validated_data.get('price',instance.price)
         instance.like = validated_data.get('like',instance.like)
         instance.iye = validated_data.get('iye',instance.iye)
