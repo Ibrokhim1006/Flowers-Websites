@@ -23,11 +23,12 @@ class CategoriyaAllSerializers(serializers.ModelSerializer):
 class CategoriyaCrudSerializers(serializers.ModelSerializer):
     class Meta:
         model = Categoriya
-        fields = ['id','title']
+        fields = ['id','title','status',]
     def create(self, validated_data):
         return Categoriya.objects.create(**validated_data)
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
+        instance.status = validated_data.get('status',instance.status)
         instance.save() 
         return instance
 
@@ -35,7 +36,7 @@ class SubCategoriyaAllSerializers(serializers.ModelSerializer):
     id_categoriya = CategoriyaAllSerializers(read_only=True)
     class Meta:
         model = SubCategoriya
-        fields = ['id','title','id_categoriya',]
+        fields = ['id','title','id_categoriya','status',]
 class CategoriyaAllSerialize(serializers.ModelSerializer):
     class Meta:
         model = Categoriya
@@ -45,12 +46,13 @@ class SubCategoriyaCrudSerializers(serializers.ModelSerializer):
     # roll_number = serializers.IntegerField()  
     class Meta:
         model = SubCategoriya
-        fields = ['id','title','id_categoriya',]
+        fields = ['id','title','id_categoriya','status',]
     def create(self, validated_data):
         return SubCategoriya.objects.create(**validated_data)
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
         instance.id_categoriya = validated_data.get('id_categoriya',instance.id_categoriya)
+        instance.status = validated_data.get('status',instance.stutus)
         instance.save() 
         return instance
 #========================Flowers Serializers=========================

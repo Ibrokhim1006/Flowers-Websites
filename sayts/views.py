@@ -13,12 +13,12 @@ from django.http import HttpResponse
 
 class CategoryAllSitesViews(APIView):
     def get(self,request,format=None):
-        objects_list = Categoriya.objects.all()  
+        objects_list = Categoriya.objects.filter(status=True)  
         serializers = CategoryAllSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 class SubCategoryAllSitesViews(APIView):
     def get(self,request,pk,format=None):
-        objects_list = SubCategoriya.objects.filter(id_categoriya__id=pk)
+        objects_list = SubCategoriya.objects.filter(id_categoriya__id=pk,status=True)
         serializers = SubCategoryAllSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 
