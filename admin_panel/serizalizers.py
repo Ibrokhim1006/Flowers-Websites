@@ -166,10 +166,10 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
         comment = validated_data['comment']
         id_flowers = validated_data['id_flowers']
        
-        for item in TypeDelivery.objects.all():
-            if id_type_delivery.id==item.id:
-                x = int(prcie)+int(item.price)
-        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,prcie=x,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
+        # for item in TypeDelivery.objects.all():
+        #     if id_type_delivery.id==item.id:
+        #         x = int(prcie)+int(item.price)
+        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,prcie=prcie,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
         saves.save()
         for item in id_flowers:
             saves.id_flowers.add(item.id)
@@ -235,4 +235,16 @@ class SeoContentCrudSerialiezers(serializers.ModelSerializer):
         instance.save() 
         return instance
 
+
+class FormasAllSerizalisers(serializers.ModelSerializer):
+    class Meta:
+        model = FormaSayts
+        fields = '__all__'
+
+class FormaCreateSerizliers(serializers.ModelSerializer):
+    class Meta:
+        model = FormaSayts
+        fields = '__all__'
+    def create(self, validated_data):
+        return FormaSayts.objects.create(**validated_data)
 

@@ -405,3 +405,50 @@ class SeoContentCrudViews(APIView):
     #     return Response({'message':"Delete success"},status=status.HTTP_200_OK)
     
 
+
+
+class FormaGetBaseAllViews(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    pagination_class = LargeResultsSetPagination
+    serializer_class = FormasAllSerizalisers
+    @property
+    def paginator(self):
+        if not hasattr(self, '_paginator'):
+            if self.pagination_class is None:
+                self._paginator = None
+            else:
+                self._paginator = self.pagination_class()
+        else:
+            pass
+        return self._paginator
+    def paginate_queryset(self, queryset):
+        if self.paginator is None:
+            return None
+        return self.paginator.paginate_queryset(queryset,self.request, view=self)
+    def get_paginated_response(self, data):
+        assert self.paginator is not None
+        return self.paginator.get_paginated_response(data)
+    def get(self, request, format=None):
+        instance = FormaSayts.objects.all().order_by('-pk')
+
+        # serializer = FlowersBaseAllSerializers(instance,many=True)
+        page = self.paginate_queryset(instance)
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        else:
+            serializer = self.serializer_class(instance, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class FormaDteileBaseAllViews(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    def get(self,request,pk,format=None):
+        objects_list = SeoContent.objects.filter(id=pk)
+        serializers = FormaSayts(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+    def delete(self,request,pk,format=None):
+        objects_get = FormaSayts.objects.get(id=pk)
+        objects_get.delete()
+        return Response({'message':"Delete success"},status=status.HTTP_200_OK)

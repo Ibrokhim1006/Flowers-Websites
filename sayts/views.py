@@ -168,3 +168,16 @@ class SeoAllSitesViews(APIView):
         objects_list = Blogs.objects.all()
         serializers = SeoContentAllSerialiezers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
+    
+
+
+
+
+
+class FormaPostSitesViews(APIView):
+    def post(self,request,format=None):
+        serializers = FormaCreateSerizliers(data=request.data)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)

@@ -1,4 +1,6 @@
 from django.db import models
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Categoriya(models.Model):
     title = models.CharField(max_length=250)
@@ -63,7 +65,7 @@ class FlowersDelivery(models.Model):
 
 class Blogs(models.Model):
     title = models.CharField(max_length=250)
-    content = models.TextField()
+    content = RichTextUploadingField()
     img = models.FileField(upload_to='blog/',null=True,blank=True)
     eye = models.IntegerField(default=0,null=True,blank=True)
     like = models.IntegerField(default=0,null=True,blank=True)
@@ -81,3 +83,13 @@ class SeoContent(models.Model):
     id_seo = models.ForeignKey(SeoCategory,on_delete=models.CASCADE)
     def __str__(self):
         return self.title
+    
+
+class FormaSayts(models.Model):
+    full_name = models.CharField(max_length=250)
+    phone = models.CharField(max_length=250)
+    content = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.full_name

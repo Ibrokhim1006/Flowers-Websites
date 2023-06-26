@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # ckeditor
+    'ckeditor',
+    'ckeditor_uploader',
     # Library
     'rest_framework',
     'corsheaders',
@@ -140,6 +143,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Rest fremwork settings
 REST_FRAMEWORK = {

@@ -29,4 +29,6 @@ urlpatterns = [
     path('seo_content_base_all_views/',SeoContentBaseAllViews.as_view()),
     path('seo_content_crud_views/<int:pk>/',SeoContentCrudViews.as_view()),
 
+    path('forma_get_base_all_views/',FormaGetBaseAllViews.as_view()),
+    path('forma_deteile_base_all_views/<int:pk>/',FormaDteileBaseAllViews.as_view()),
 ]   
