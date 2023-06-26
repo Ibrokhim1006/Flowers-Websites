@@ -52,7 +52,7 @@ class SubCategoriyaCrudSerializers(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
         instance.id_categoriya = validated_data.get('id_categoriya',instance.id_categoriya)
-        instance.status = validated_data.get('status',instance.stutus)
+        instance.status = validated_data.get('status',instance.status)
         instance.save() 
         return instance
 #========================Flowers Serializers=========================
