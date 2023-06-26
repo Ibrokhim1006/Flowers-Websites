@@ -100,7 +100,7 @@ class SubCategoriyaBaseCrudViews(APIView):
         serializers = SubCategoriyaCrudSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
     def put(self,request,pk,format=None):
-        serializers = SubCategoriyaCrudSerializers(instance=SubCategoriya.objects.get(id=pk),data=request.data,partial =True)
+        serializers = SubCategoriyaCrudSerializers(instance=SubCategoriya.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
             return Response(serializers.data,status=status.HTTP_200_OK)

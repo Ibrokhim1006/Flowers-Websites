@@ -14,7 +14,14 @@ class SubCategoriya(models.Model):
     status = models.BooleanField(default=True)
     def __str__(self):
         return self.title
-    
+
+# class SubCategoriyaTwo(models.Model):
+#     title = models.CharField(max_length=250)
+#     id_categroriya = models.ForeignKey(SubCategoriya,on_delete=models.CASCADE)
+#     status = models.BooleanField(default=True)
+#     def __str__(self) -> str:
+#         return self.title    
+
 class Flowers(models.Model):
     name = models.CharField(max_length=250)
     cotent = models.TextField()
