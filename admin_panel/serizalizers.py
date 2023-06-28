@@ -125,13 +125,12 @@ class FlowersCommitVideoCrudSerializers(serializers.ModelSerializer):
     # id_flowers = FlowersBaseAllSerializers(read_only=True)
     class Meta:
         model = FlowersCommentVideos
-        fields = ['id','id_flowers','comment','videos','create_date']
+        fields = ['id','id_flowers','comment','create_date']
     def create(self, validated_data):
         return FlowersCommentVideos.objects.create(**validated_data)
     def update(self, instance, validated_data):
         instance.id_flowers = validated_data.get('id_flowers',instance.id_flowers)
         instance.comment = validated_data.get('comment',instance.comment)
-        instance.videos = validated_data.get('videos',instance.videos)
         instance.save() 
         return instance
 
