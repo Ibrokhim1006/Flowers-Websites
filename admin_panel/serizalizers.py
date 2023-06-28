@@ -120,7 +120,7 @@ class FlowersCommitVideoBaseSerializers(serializers.ModelSerializer):
     id_flowers = FlowersBaseAllSerializers(read_only=True)
     class Meta:
         model = FlowersCommentVideos
-        fields = ['id','id_flowers','comment','videos','create_date']
+        fields = ['id','id_flowers','comment','create_date']
 class FlowersCommitVideoCrudSerializers(serializers.ModelSerializer):
     # id_flowers = FlowersBaseAllSerializers(read_only=True)
     class Meta:
