@@ -24,8 +24,8 @@ class SubCategoriya(models.Model):
 
 class Flowers(models.Model):
     name = models.CharField(max_length=250)
-    cotent = RichTextUploadingField()
-    rank = RichTextUploadingField() # tarkibi
+    cotent = RichTextUploadingField(null=True,blank=True)
+    rank = RichTextUploadingField(null=True,blank=True) # tarkibi
     price = models.CharField(max_length=250)
     like = models.SmallIntegerField(null=True,blank=True)
     iye = models.SmallIntegerField(null=True,blank=True)
