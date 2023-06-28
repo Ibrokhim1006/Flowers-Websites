@@ -238,7 +238,7 @@ class FlowersVideoCommitBaseAllViews(APIView):
     def post(self,request,format=None):
         serializers = FlowersCommitVideoCrudSerializers(data=request.data)
         if serializers.is_valid(raise_exception=True):
-            serializers.save(videos = request.data.get('videos'))
+            serializers.save()
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class FlowersVideoCommitCrudViews(APIView):
@@ -251,7 +251,7 @@ class FlowersVideoCommitCrudViews(APIView):
     def put(self,request,pk,format=None):
         serializers = FlowersCommitVideoCrudSerializers(instance=FlowersCommentVideos.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
-            serializers.save(videos = request.data.get('videos'))
+            serializers.save()
             return Response(serializers.data,status=status.HTTP_200_OK)
         return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request,pk,format=None):
