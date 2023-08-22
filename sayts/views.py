@@ -70,7 +70,6 @@ class FlowersDeteileViews(APIView):
 def Flouvers(request):
     for item in FlowersImages.objects.all():
         x = item
-    print(x)
     return HttpResponse()
 #====================================== Otziv Views ==================================
 class CommitVidoesSitesViews(APIView):

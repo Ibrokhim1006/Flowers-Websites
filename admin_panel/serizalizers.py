@@ -23,11 +23,12 @@ class CategoriyaAllSerializers(serializers.ModelSerializer):
 class CategoriyaCrudSerializers(serializers.ModelSerializer):
     class Meta:
         model = Categoriya
-        fields = ['id','title','status',]
+        fields = ['id','title','img','status',]
     def create(self, validated_data):
         return Categoriya.objects.create(**validated_data)
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title',instance.title)
+        instance.img = validated_data.get('img',instance.img)
         instance.status = validated_data.get('status',instance.status)
         instance.save() 
         return instance

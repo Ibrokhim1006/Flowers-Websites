@@ -4,6 +4,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class Categoriya(models.Model):
     title = models.CharField(max_length=250)
+    img = models.ImageField(upload_to='category/',null=True,blank=True)
     status = models.BooleanField(default=True)
     def __str__(self):
         return self.title
