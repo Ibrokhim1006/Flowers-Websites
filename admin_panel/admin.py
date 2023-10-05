@@ -16,3 +16,4 @@ admin.site.register(SeoContent)
 
 
 admin.site.register(FormaSayts)
+admin.site.register(SizeFlow)
