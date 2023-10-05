@@ -67,7 +67,7 @@ class FlowersBaseAllSerializers(serializers.ModelSerializer):
     flowers = FlowersImagesSer(many=True,read_only=True)
     class Meta:
         model = Flowers
-        fields = ('id','name','cotent','rank','price','like','iye','id_category','id_sub_category','create_date','flowers')
+        fields = ('id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','create_date','flowers')
 
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
@@ -78,7 +78,7 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
         write_only=True)
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','like','iye','id_category','id_sub_category','img']
+        fields = ['id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','img']
     def create(self, validated_data):
         img = validated_data.pop('img')
         flowers = Flowers.objects.create(**validated_data)
@@ -91,6 +91,8 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
         instance.cotent = validated_data.get('cotent',instance.cotent)
         instance.price = validated_data.get('price',instance.price)
         instance.rank = validated_data.get('rank',instance.rank)
+        instance.upa = validated_data.get('upa',instance.upa)
+        instance.con = validated_data.get('con', instance.con)
         instance.like = validated_data.get('like',instance.like)
         instance.iye = validated_data.get('iye',instance.iye)
         instance.id_sub_category = validated_data.get('id_sub_category',instance.id_sub_category)
@@ -141,19 +143,25 @@ class TypeDeliverySerializers(serializers.ModelSerializer):
         model = TypeDelivery
         fields = '__all__'
 
+class SizeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = SizeFlow
+        fields = '__all__'
+
 class FlowersDeliveryBaseSerializers(serializers.ModelSerializer):
     id_flowers = FlowersBaseAllSerializers(read_only=True,many=True)
     id_type_delivery = TypeDeliverySerializers(read_only=True)
+    id_size = SizeSerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
-        fields = ['id','id_flowers','prcie','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
+        fields = ['id','id_flowers','prcie','id_size','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
 
 class FlowersDeliveryCrudSerializers(serializers.ModelSerializer): 
     # id_flowers = FlowersBaseAllSerializers(read_only=True)
     # id_type_delivery = TypeDeliverySerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
-        fields = ['id','id_flowers','prcie','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
+        fields = ['id','id_flowers','prcie','id_size','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
     def create(self, validated_data):
         prcie = validated_data['prcie']
         id_type_delivery = validated_data['id_type_delivery']
@@ -168,11 +176,12 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
         and_time = validated_data['and_time']
         comment = validated_data['comment']
         id_flowers = validated_data['id_flowers']
+        id_size = validated_data['id_size']
        
         # for item in TypeDelivery.objects.all():
         #     if id_type_delivery.id==item.id:
         #         x = int(prcie)+int(item.price)
-        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,prcie=prcie,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
+        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,id_size=id_size,prcie=prcie,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
         saves.save()
         for item in id_flowers:
             saves.id_flowers.add(item.id)

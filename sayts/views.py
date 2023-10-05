@@ -13,7 +13,7 @@ from django.http import HttpResponse
 
 class CategoryAllSitesViews(APIView):
     def get(self,request,format=None):
-        objects_list = Categoriya.objects.filter(status=True)  
+        objects_list = Categoriya.objects.filter(status=True)
         serializers = CategoryAllSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 class SubCategoryAllSitesViews(APIView):
@@ -31,6 +31,12 @@ class FlowersSubCategoryDeteile(APIView):
     def get(self,request,pk,format=None):
         objects_list = Flowers.objects.filter(id_sub_category__id=pk)
         serializers = FlowersAllSerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+
+class SziseFlowerViews(APIView):
+    def get(self,request,pk,format=None):
+        objects_list = SizeFlow.objects.filter(id_sub_category__id=pk)
+        serializers = SizeSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 #==================Flowers Views===================================
 class FlowersAllSitesViews(APIView):

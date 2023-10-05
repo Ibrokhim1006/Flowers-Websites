@@ -2,6 +2,7 @@ from django.urls import path
 from sayts.views import *
 
 urlpatterns = [
+
     path('category_all_views/',CategoryAllSitesViews.as_view()),
     path('sub_category_all_views/<int:pk>/',SubCategoryAllSitesViews.as_view()),
     #========================= FLowers Urls ===========================
@@ -23,6 +24,7 @@ urlpatterns = [
 
     path('seo_all_sites_views/',SeoAllSitesViews.as_view()),
 
-    path('forma_post_sites_views/',FormaPostSitesViews.as_view())
+    path('forma_post_sites_views/',FormaPostSitesViews.as_view()),
+    path('SziseFlowerViews/',SziseFlowerViews.as_view()),
 
 ]

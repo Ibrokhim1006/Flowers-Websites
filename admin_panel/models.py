@@ -28,6 +28,8 @@ class Flowers(models.Model):
     cotent = RichTextUploadingField(null=True,blank=True)
     rank = RichTextUploadingField(null=True,blank=True) # tarkibi
     price = models.CharField(max_length=250)
+    upa = models.CharField(max_length=250,null=True,blank=True)
+    con = models.CharField(max_length=250,null=True,blank=True)
     like = models.SmallIntegerField(null=True,blank=True)
     iye = models.SmallIntegerField(null=True,blank=True)
     id_category = models.ForeignKey(Categoriya,on_delete=models.CASCADE,null=True,blank=True)
@@ -54,8 +56,14 @@ class TypeDelivery(models.Model):
     def __str__(self):
         return self.title
 
+class SizeFlow(models.Model):
+    title = models.CharField(max_length=250)
+    def __str__(self):
+        return self.title
+
 class FlowersDelivery(models.Model):
     id_flowers = models.ManyToManyField(Flowers,blank=True)
+    id_size = models.ForeignKey(SizeFlow,on_delete=models.CASCADE,null=True,blank=True)
     prcie = models.CharField(max_length=250,null=True,blank=True)
     id_type_delivery = models.ForeignKey(TypeDelivery,on_delete=models.CASCADE,null=True,blank=True)
     full_name = models.CharField(max_length=250,null=True,blank=True)
