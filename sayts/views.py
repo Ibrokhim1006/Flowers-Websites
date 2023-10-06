@@ -34,8 +34,8 @@ class FlowersSubCategoryDeteile(APIView):
         return Response(serializers.data,status=status.HTTP_200_OK)
 
 class SziseFlowerViews(APIView):
-    def get(self,request,pk,format=None):
-        objects_list = SizeFlow.objects.filter(id_sub_category__id=pk)
+    def get(self,request,format=None):
+        objects_list = SizeFlow.objects.all()
         serializers = SizeSerializers(objects_list,many=True)
         return Response(serializers.data,status=status.HTTP_200_OK)
 #==================Flowers Views===================================
