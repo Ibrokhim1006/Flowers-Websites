@@ -154,14 +154,14 @@ class FlowersDeliveryBaseSerializers(serializers.ModelSerializer):
     id_size = SizeSerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
-        fields = ['id','id_flowers','prcie','id_size','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
+        fields = ['id', 'fowers','create_date']
 
 class FlowersDeliveryCrudSerializers(serializers.ModelSerializer): 
     # id_flowers = FlowersBaseAllSerializers(read_only=True)
     # id_type_delivery = TypeDeliverySerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
-        fields = ['id', 'fowers']
+        fields = ['id', 'fowers','create_date']
     def create(self, validated_data):
         """News Create Function"""
         return FlowersDelivery.objects.create(**validated_data)
