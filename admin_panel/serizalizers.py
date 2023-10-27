@@ -161,32 +161,10 @@ class FlowersDeliveryCrudSerializers(serializers.ModelSerializer):
     # id_type_delivery = TypeDeliverySerializers(read_only=True)
     class Meta:
         model = FlowersDelivery
-        fields = ['id','id_flowers','prcie','id_size','id_type_delivery','full_name','phone','full_name_payee','phone_payee','address_street_home','address_addition','date_delivery','time_delivery','and_time','comment','create_date',]
+        fields = ['id', 'fowers']
     def create(self, validated_data):
-        prcie = validated_data['prcie']
-        id_type_delivery = validated_data['id_type_delivery']
-        full_name = validated_data['full_name']
-        phone = validated_data['phone']
-        full_name_payee = validated_data['full_name_payee']
-        phone_payee = validated_data['phone_payee']
-        address_street_home = validated_data['address_street_home']
-        address_addition = validated_data['address_addition']
-        date_delivery = validated_data['date_delivery']
-        time_delivery = validated_data['time_delivery']
-        and_time = validated_data['and_time']
-        comment = validated_data['comment']
-        id_flowers = validated_data['id_flowers']
-        id_size = validated_data['id_size']
-       
-        # for item in TypeDelivery.objects.all():
-        #     if id_type_delivery.id==item.id:
-        #         x = int(prcie)+int(item.price)
-        saves = FlowersDelivery.objects.create(id_type_delivery=id_type_delivery,full_name=full_name,id_size=id_size,prcie=prcie,phone=phone,full_name_payee=full_name_payee,phone_payee=phone_payee,address_street_home=address_street_home,address_addition=address_addition,date_delivery=date_delivery,time_delivery=time_delivery,and_time=and_time,comment=comment)
-        saves.save()
-        for item in id_flowers:
-            saves.id_flowers.add(item.id)
-            saves.save()
-        return saves
+        """News Create Function"""
+        return FlowersDelivery.objects.create(**validated_data)
     # def update(self, instance, validated_data):
     #     instance.id_flowers = validated_data.get('id_flowers',instance.id_flowers)
     #     instance.comment = validated_data.get('comment',instance.comment)

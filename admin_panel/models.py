@@ -62,23 +62,9 @@ class SizeFlow(models.Model):
         return self.title
 
 class FlowersDelivery(models.Model):
-    id_flowers = models.ManyToManyField(Flowers,blank=True)
-    id_size = models.ForeignKey(SizeFlow,on_delete=models.CASCADE,null=True,blank=True)
-    prcie = models.CharField(max_length=250,null=True,blank=True)
-    id_type_delivery = models.ForeignKey(TypeDelivery,on_delete=models.CASCADE,null=True,blank=True)
-    full_name = models.CharField(max_length=250,null=True,blank=True)
-    phone = models.CharField(max_length=250,null=True,blank=True)
-    full_name_payee = models.CharField(max_length=250,null=True,blank=True)
-    phone_payee = models.CharField(max_length=250,null=True,blank=True)
-    address_street_home = models.CharField(max_length=250,null=True,blank=True)
-    address_addition = models.CharField(max_length=250,null=True,blank=True)
-    date_delivery = models.DateField(null=True,blank=True)
-    time_delivery = models.TimeField(null=True,blank=True)
-    and_time = models.TimeField(null=True,blank=True)
-    comment = models.TextField(null=True,blank=True)
+    fowers = models.JSONField(null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.full_name
+
 
 class Blogs(models.Model):
     title = models.CharField(max_length=250)
