@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Q
 from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from sayts.pagination import LargeResultsSetPagination
 from rest_framework import generics
@@ -210,11 +212,19 @@ class BlogsDeteilesSitesViews(APIView):
         return Response({"message": "like"}, status=status.HTTP_200_OK)
 
 
-class AllProductSearchView(generics.ListAPIView):
-    queryset = Flowers.objects.all()
-    serializer_class = FlowersAllSerializers
-    filter_backends = [filters.SearchFilter]
-    search_fields = ["name", "price"]
+class AllProductSearchView(APIView):
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["name"]
+
+    def get(self, request, format=None, *args, **kwargs):
+        search_name = request.query_params.get("name", None)
+
+        queryset = Flowers.objects.all()
+
+        if search_name:
+            queryset = queryset.filter(Q(name__icontains=search_name))
+        serializers = FlowersAllSerializers(queryset, many=True)
+        return Response({"data": serializers.data}, status=status.HTTP_200_OK)
 
 
 class SeoAllSitesViews(APIView):
@@ -233,8 +243,8 @@ class FormaPostSitesViews(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProductList(generics.ListAPIView):
-    queryset = Flowers.objects.all()
-    serializer_class = FlowersAllSerializers
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+# class ProductList(generics.ListAPIView):
+#     queryset = Flowers.objects.all()
+#     serializer_class = FlowersAllSerializers
+#     filter_backends = [filters.SearchFilter]
+#     search_fields = ['name']

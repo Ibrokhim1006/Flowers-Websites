@@ -20,5 +20,5 @@ urlpatterns = [
     path("seo_all_sites_views/", SeoAllSitesViews.as_view()),
     path("forma_post_sites_views/", FormaPostSitesViews.as_view()),
     path("SziseFlowerViews/", SziseFlowerViews.as_view()),
-    path("poduct_filter/", ProductList.as_view()),
+    # path("poduct_filter/", ProductList.as_view()),
 ]
