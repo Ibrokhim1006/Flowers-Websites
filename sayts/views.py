@@ -85,6 +85,13 @@ class FlowersAllSitesViews(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class FlowersAllViews(APIView):
+    def get(self, request, format=None):
+        objects_list = Flowers.objects.all().order_by("-pk")
+        serializer = FlowersAllSerializers(objects_list, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class FlowersDeteileViews(APIView):
     def get(self, request, pk, format=None):
         objects_list = Flowers.objects.filter(id=pk)
