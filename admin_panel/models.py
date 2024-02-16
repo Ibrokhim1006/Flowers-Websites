@@ -34,6 +34,7 @@ class Flowers(models.Model):
     iye = models.SmallIntegerField(null=True,blank=True)
     id_category = models.ForeignKey(Categoriya,on_delete=models.CASCADE,null=True,blank=True)
     id_sub_category = models.ForeignKey(SubCategoriya,on_delete=models.CASCADE,null=True,blank=True)
+    is_active = models.BooleanField(default=False)
     create_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name

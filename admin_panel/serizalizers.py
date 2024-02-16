@@ -67,7 +67,7 @@ class FlowersBaseAllSerializers(serializers.ModelSerializer):
     flowers = FlowersImagesSer(many=True,read_only=True)
     class Meta:
         model = Flowers
-        fields = ('id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','create_date','flowers')
+        fields = ('id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','create_date','flowers', 'is_active')
 
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
@@ -78,7 +78,7 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
         write_only=True)
     class Meta:
         model = Flowers
-        fields = ['id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','img']
+        fields = ['id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','img', 'is_active']
     def create(self, validated_data):
         img = validated_data.pop('img')
         flowers = Flowers.objects.create(**validated_data)
@@ -97,6 +97,7 @@ class FlowersBaseCruderializers(serializers.ModelSerializer):
         instance.iye = validated_data.get('iye',instance.iye)
         instance.id_sub_category = validated_data.get('id_sub_category',instance.id_sub_category)
         instance.id_category = validated_data.get('id_category',instance.id_category)
+        instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save() 
         return instance
 class FlowersImagesAllSerizaliers(serializers.ModelSerializer):
