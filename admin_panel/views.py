@@ -452,3 +452,38 @@ class FormaDteileBaseAllViews(APIView):
         objects_get = FormaSayts.objects.get(id=pk)
         objects_get.delete()
         return Response({'message':"Delete success"},status=status.HTTP_200_OK)
+    
+
+
+
+
+class AksiyaAllViews(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    def get(self,request,format=None):
+        objects_list = Aksiya.objects.all()
+        serializer = AksiyaSerizalisers(objects_list,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def post(self,request,format=None):
+        serializers = AksiyaCrudSerizalisers(data=request.data)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+class AksiyaCrudViews(APIView):
+    render_classes = [UserRenderers]
+    perrmisson_class = [IsAuthenticated]
+    def get(self,request,pk,format=None):
+        objects_list = Aksiya.objects.filter(id=pk)
+        serializers = AksiyaSerizalisers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+    def put(self,request,pk,format=None):
+        serializers = AksiyaCrudSerizalisers(instance=Aksiya.objects.filter(id=pk)[0],data=request.data,partial =True)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_200_OK)
+        return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request,pk,format=None):
+        objects_get = Aksiya.objects.get(id=pk)
+        objects_get.delete()
+        return Response({'message':"Delete success"},status=status.HTTP_200_OK)

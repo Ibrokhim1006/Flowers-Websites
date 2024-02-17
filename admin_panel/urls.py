@@ -31,4 +31,7 @@ urlpatterns = [
 
     path('forma_get_base_all_views/',FormaGetBaseAllViews.as_view()),
     path('forma_deteile_base_all_views/<int:pk>/',FormaDteileBaseAllViews.as_view()),
+
+    path('askiya_all/', AksiyaAllViews.as_view()),
+    path('aksiya_crud/<int:pk>/', AksiyaCrudViews.as_view()),
 ]   

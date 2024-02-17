@@ -239,3 +239,14 @@ class FormaCreateSerizliers(serializers.ModelSerializer):
     def create(self, validated_data):
         return FormaSayts.objects.create(**validated_data)
 
+
+class AksiyaSerizalisers(serializers.ModelSerializer):
+    class Meta:
+        model = Aksiya
+        fields = '__all__'
+
+
+class AksiyaCrudSerizalisers(serializers.ModelSerializer):
+    class Meta:
+        model = Aksiya
+        fields = ['id', 'title', 'is_active']
