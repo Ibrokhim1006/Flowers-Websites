@@ -19,3 +19,7 @@ admin.site.register(FormaSayts)
 admin.site.register(SizeFlow)
 
 admin.site.register(Aksiya)
+
+
+admin.site.register(Size)
+admin.site.register(Price)

@@ -61,13 +61,26 @@ class FlowersImagesSer(serializers.ModelSerializer):
     class Meta:
         model = FlowersImages
         fields = '__all__'
+
+class SizesSerializers(serializers.ModelSerializer):
+    class meta:
+        model = Size
+        fields = '__all__'
+
+
+class PriceSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Price
+        fields = '__all__'
+    
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
     id_category = CategoriyaAllSerializers(read_only=True)    
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
     flowers = FlowersImagesSer(many=True,read_only=True)
+    prices = PriceSerializers(many=True,read_only=True)
     class Meta:
         model = Flowers
-        fields = ('id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','create_date','flowers', 'is_active')
+        fields = ('id','name','cotent','rank','price','upa','con','like','iye','id_category','id_sub_category','create_date','flowers', 'prices', 'is_active')
 
 class FlowersBaseCruderializers(serializers.ModelSerializer):
     # id_category = CategoriyaAllSerializers(read_only=True)
@@ -146,7 +159,7 @@ class TypeDeliverySerializers(serializers.ModelSerializer):
 
 class SizeSerializers(serializers.ModelSerializer):
     class Meta:
-        model = SizeFlow
+        model = Size
         fields = '__all__'
 
 class FlowersDeliveryBaseSerializers(serializers.ModelSerializer):

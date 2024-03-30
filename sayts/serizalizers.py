@@ -41,11 +41,18 @@ class CommitVideoSer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class PriceSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Price
+        fields = '__all__'
+
+
 class FlowersAllSerializers(serializers.ModelSerializer):
     id_category = CategoryFlowers(read_only=True)
     id_sub_category = SubCategoryFlowers(read_only=True)
     flowers = ImgFlowers(many=True, read_only=True)
     commit = CommitVideoSer(many=True, read_only=True)
+    prices = PriceSerializers(many=True,read_only=True)
 
     class Meta:
         model = Flowers

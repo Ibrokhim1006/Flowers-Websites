@@ -34,4 +34,8 @@ urlpatterns = [
 
     path('askiya_all/', AksiyaAllViews.as_view()),
     path('aksiya_crud/<int:pk>/', AksiyaCrudViews.as_view()),
+
+    path('size/', SizeViews.as_view()),
+    path('price/create/', PricesViews.as_view()),
+    path('price/<int:pk>/', PriceViews.as_view()),
 ]   

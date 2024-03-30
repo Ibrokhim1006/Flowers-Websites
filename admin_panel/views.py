@@ -487,3 +487,39 @@ class AksiyaCrudViews(APIView):
         objects_get = Aksiya.objects.get(id=pk)
         objects_get.delete()
         return Response({'message':"Delete success"},status=status.HTTP_200_OK)
+
+
+class SizeViews(APIView):
+    def get(self,request,format=None):
+        objects_list = Size.objects.all()
+        serializers = SizeSerializers(objects_list, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
+
+
+
+class PricesViews(APIView):
+    def post(self,request,format=None):
+        serializers = PriceSerializers(data=request.data)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+class PriceViews(APIView):
+    def put(self,request,pk,format=None):
+        serializers = PriceSerializers(instance=Price.objects.filter(id=pk)[0],data=request.data,partial =True)
+        if serializers.is_valid(raise_exception=True):
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_200_OK)
+        return Response({'error':'update error data'},status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self,request,pk,format=None):
+        objects_list = Price.objects.filter(id=pk)
+        serializers = PriceSerializers(objects_list,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
+
+    def delete(self,request,pk,format=None):
+        objects_get = Price.objects.get(id=pk)
+        objects_get.delete()
+        return Response({'message':"Delete success"},status=status.HTTP_200_OK)

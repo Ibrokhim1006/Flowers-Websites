@@ -21,7 +21,13 @@ class SubCategoriya(models.Model):
 #     id_categroriya = models.ForeignKey(SubCategoriya,on_delete=models.CASCADE)
 #     status = models.BooleanField(default=True)
 #     def __str__(self) -> str:
-#         return self.title    
+#         return self.title
+
+class Size(models.Model):
+    name = models.CharField(max_length=250, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 class Flowers(models.Model):
     name = models.CharField(max_length=250)
@@ -45,6 +51,14 @@ class FlowersImages(models.Model):
     def __str__(self):
         return "%s" % (self.id_flowers.name)
 
+
+class Price(models.Model):
+    flower = models.ForeignKey(Flowers,on_delete=models.CASCADE,related_name='prices')
+    size = models.ForeignKey(Size, on_delete=models.CASCADE,related_name='size')
+    price = models.CharField(max_length=250,null=True,blank=True)
+
+    def __str__(self) -> str:
+        return self.price
 
 class FlowersCommentVideos(models.Model):
     id_flowers = models.ForeignKey(Flowers,on_delete=models.CASCADE,related_name='commit',null=True,blank=True)
