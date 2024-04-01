@@ -62,17 +62,21 @@ class FlowersImagesSer(serializers.ModelSerializer):
         model = FlowersImages
         fields = '__all__'
 
+
 class SizesSerializers(serializers.ModelSerializer):
-    class meta:
+    class Meta:
         model = Size
         fields = '__all__'
 
 
 class PriceSerializers(serializers.ModelSerializer):
+    size = SizesSerializers(read_only=True)
+
     class Meta:
         model = Price
         fields = '__all__'
-    
+
+
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
     id_category = CategoriyaAllSerializers(read_only=True)    
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
