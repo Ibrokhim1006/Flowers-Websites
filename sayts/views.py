@@ -92,6 +92,21 @@ class FlowersAllViews(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class PriceFilterViews(APIView):
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["id"]
+    def get(self, request, pk, format=None):
+        price = request.query_params.get("price", None)
+        queryset = Price.objects.filter(flower=pk).order_by("-pk")
+
+        if price:
+            queryset = queryset.filter(Q(id__icontains=price))
+
+        # Serialize the filtered queryset
+        serializer = PriceSerializers(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class FlowersDeteileViews(APIView):
     def get(self, request, pk, format=None):
         objects_list = Flowers.objects.filter(id=pk)

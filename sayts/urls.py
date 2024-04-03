@@ -21,5 +21,6 @@ urlpatterns = [
     path("forma_post_sites_views/", FormaPostSitesViews.as_view()),
     path("SziseFlowerViews/", SziseFlowerViews.as_view()),
     path('flowers_all_views/', FlowersAllViews.as_view()),
+    path('price_filter/<int:pk>/', PriceFilterViews.as_view()),
     # path("poduct_filter/", ProductList.as_view()),
 ]
