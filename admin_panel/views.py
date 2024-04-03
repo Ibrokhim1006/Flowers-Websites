@@ -508,7 +508,7 @@ class PricesViews(APIView):
 
 class PriceViews(APIView):
     def put(self,request,pk,format=None):
-        serializers = PriceSerializers(instance=Price.objects.filter(id=pk)[0],data=request.data,partial =True)
+        serializers = PriceUpSerializers(instance=Price.objects.filter(id=pk)[0],data=request.data,partial =True)
         if serializers.is_valid(raise_exception=True):
             serializers.save()
             return Response(serializers.data,status=status.HTTP_200_OK)

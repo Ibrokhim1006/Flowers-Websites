@@ -41,7 +41,14 @@ class CommitVideoSer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class SizesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Size
+        fields = '__all__'
+
+
 class PriceSerializers(serializers.ModelSerializer):
+    size = SizesSerializers(read_only=True)
     class Meta:
         model = Price
         fields = '__all__'

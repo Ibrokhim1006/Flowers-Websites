@@ -77,6 +77,20 @@ class PriceSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PriceUpSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = Price
+        fields = '__all__'
+    
+    def update(self, instance, validated_data):
+        instance.price = validated_data.get('price',instance.price)
+        instance.size = validated_data.get('size',instance.size)
+        instance.flower = validated_data.get('flower',instance.flower)
+        instance.save() 
+        return instance
+
+
 class FlowersBaseAllSerializers(serializers.ModelSerializer):
     id_category = CategoriyaAllSerializers(read_only=True)    
     id_sub_category = SubCategoriyaAllSerializers(read_only=True)
