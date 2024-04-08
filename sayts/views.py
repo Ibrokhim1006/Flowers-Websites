@@ -91,6 +91,11 @@ class FlowersAllViews(APIView):
         serializer = FlowersAllSerializers(objects_list, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class FlowersVazaViews(APIView):
+    def get(self, request, format=None):
+        objects_list = Flowers.objects.filter(id_sub_category=52).order_by("-pk")
+        serializer = FlowersAllSerializers(objects_list, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PriceFilterViews(APIView):
     filter_backends = [DjangoFilterBackend]
